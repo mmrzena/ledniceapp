@@ -1,0 +1,324 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
+
+body{
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  background: #1a1b1b;
+  font-family: 'Open Sans';
+}
+
+input[type=number]::-webkit-inner-spin-button{
+  appearance: none;
+}
+
+input:focus {
+  outline: 0;
+}
+
+.App {
+  max-width: 1000px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 20px;
+}
+
+.filter {
+  padding: 0;
+}
+
+.filter input {
+  height: 30px;
+  width: 100%;
+  font-size: 12px;
+  border: 2px white solid;
+  background: black;
+  opacity: 0.3;
+  border-radius: 30px;
+  text-indent: 16px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  color: white;
+  padding-right: 10px;
+  box-sizing: border-box;
+  transition: all 0.2s ease-in-out;
+}
+
+.filter input:focus {
+  font-size: 50px;
+  height: 80px;
+}
+
+.filter input:focus::placeholder{
+  color: white;
+}
+
+.noFood {
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+}
+
+.listDiv ul {
+  padding: 20px;
+  margin-right: 10px;
+  margin-bottom: 25px;
+  margin-top: 0;
+  list-style: none;
+  border-radius: 5px;
+  width: 180px;
+  color: black;
+  box-sizing: border-box;
+}
+
+.listDiv {
+  display: flex;
+  max-width: 1000px;
+  flex-wrap: wrap;
+  color: white;
+  flex-flow: column;
+}
+
+.rendered {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.renderedCategory {
+  display: block;
+  width: 100%;
+  height: 40px;
+}
+
+.renderedItems {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.itemCategory{
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.itemSubcategory {
+  text-align: left;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.itemQuantity {
+  font-size: 16px;
+  text-align: left;
+}
+
+button:focus {
+  outline: 0;
+}
+
+button{
+  cursor: pointer;
+}
+
+.buttons{
+  text-align: right;
+}
+
+.delButton {
+  padding: 5px;
+  margin: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  font-weight: bold;
+  background: transparent;
+  border-radius: 50%;
+  transition: ease-in-out 0.5s;
+  transform-style: preserve-3d;
+  transform: rotateX(0deg);
+}
+
+.delButton:hover {
+  transform: rotateX(360deg);
+  background: #F21B3F;
+}
+
+.upButton {
+  margin-left: 15px;
+}
+
+.upButton, .downButton {
+  background: transparent;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+  width: 25px;
+  height: 25px;
+  font-size: 16px;
+}
+
+.upButton:hover {
+  color: #00D9C0;
+}
+ 
+.downButton:hover {
+  color: #F21B3F;
+}
+
+.openModalButton {
+  width: 100%;
+  height: 40px;
+  font-size: 24px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  border-radius: 30px;
+  background: white;
+  color: black;
+  border: none;
+  transition: all;
+}
+
+.openModalButton:hover {
+  color: white;
+  background: black;
+  border: 2px white solid;
+}
+
+.openModal {
+  width: calc(100% - 40px);
+  background: rgba(0,0,0,0.7);
+  position: fixed;
+  padding: 20px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+  z-index: 9;
+}
+
+.closeModal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  border: 2px solid black;
+  padding: 0;
+  margin: 10px;
+  color: black;
+  background: #FFFFF3;
+  border-radius: 50%;
+  transition: all ease-in-out 0.2s;
+  font-weight: bold;
+}
+
+.closeModal:hover {
+  color: white;
+  background: black;
+  transform: scale(1.2);
+
+}
+
+.contentModal {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 60px;
+  background: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 10;
+}
+
+.renCatAndSub {
+  display: flex;
+  flex-flow: column;
+  font-weight: bold;
+}
+
+.renCatAndSub ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-flow: wrap;
+}
+
+.subcategory {
+  width: 120px;
+  height: 120px;
+  margin: 10px;
+  background: white;
+  border: none;
+  border-radius: 15px;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: center;
+  border-radius: 15px;
+}
+
+.subcategoryNameButton{
+  width: 70px;
+  height: 70px;
+  border: 2px solid lightgray;
+  border-radius: 50%;
+  background: white;
+}
+
+.subcategoryNameButton:hover{
+  transform: scale(1.1);
+}
+
+.subcategoryNameButton:active{
+  transform: scale(0.9);
+}
+
+.subcategoryInput {
+  width: 100%;
+  border: none;
+  text-align: center;
+}
+
+.subcategoryPlusButton, .subcategoryMinusButton {
+  border-radius: 25px;
+  background: white;
+  padding: 0;
+  border: 1px solid lightgray;
+  box-sizing: border-box;
+  width: 40px;
+  height: 25px;
+  font-size: 16px;  
+}
+
+.mlečnévýrobky {
+  background-color: white;
+}
+
+.ovoce {
+  background-color: #FFA500;
+}
+
+.pivo{
+  background-image: linear-gradient(to bottom, #ffffff, #ffcc00);
+}
+
+.zelenina {
+  background-color: #8DC48D;
+}
+
+.maso{
+  background: #f03939b0;
+}
+
+.nealko{
+  background-image: linear-gradient(to bottom, #ffffff, #0077ff50);
+}
+
+.ryby {
+  background: #F21B3F;
+}
