@@ -61,13 +61,13 @@ input:focus {
 }
 
 .listDiv ul {
-  padding: 20px;
+  padding: 18px;
   margin-right: 10px;
   margin-bottom: 25px;
   margin-top: 0;
   list-style: none;
   border-radius: 5px;
-  width: 180px;
+  width: 160px;
   color: black;
   box-sizing: border-box;
 }

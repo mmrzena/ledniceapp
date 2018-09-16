@@ -5,7 +5,6 @@ class CategoryButton extends Component {
 
 
     renderCategories() {
-        console.log('lol ', this.props.category)
         return this.props.category
                .map( category => 
                 <Categories {...category} key={category.id} 
