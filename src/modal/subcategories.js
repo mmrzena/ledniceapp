@@ -39,7 +39,7 @@ class Subcategories extends Component {
 
     clearInputValue(){
         this.props.handleQinModal(this.state.inputValue, this.props.id, this.props.props.id, this.props.name);
-        this.setState({inputValue: ''})
+        this.setState({inputValue: ''});       
     }
 
   render() {
@@ -50,7 +50,7 @@ class Subcategories extends Component {
         </button>
         <input className='subcategoryInput' 
         type='number' value={this.state.inputValue} onChange={this.handleQ.bind(this)}
-        placeholder='Quantity'
+        placeholder='quantity'
         />
         
         <button className='subcategoryPlusButton' onClick={this.increaseInputValue.bind(this)}>

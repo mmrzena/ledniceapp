@@ -3,7 +3,8 @@ import './style/App.css';
 import ItemList from './itemList/ItemList.js';
 import Filter from './filter/filter.js';
 import CategoryButton from './modal/categoryButton.js';
-import category from './variables/variables.js'
+import category from './variables/variables.js';
+import GeneratorButton from './generator/generatorButton.js'
 
 const items = [
   { 
@@ -38,6 +39,8 @@ const items = [
 
 
 
+
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -46,12 +49,15 @@ class App extends Component {
       items: items,
       filterString: '',
       category: category,
-      openModal: false
+      openModal: false,
+      openGeneratorModal: false,
     };
   }
   
+  
+  
   render() {
-    
+      
     return (
       <div className="App">    
         <Filter onTextChange={text => this.setState({filterString: text})} />
@@ -65,7 +71,15 @@ class App extends Component {
           editDownQ={this.editDownQ.bind(this)}
           items={this.state.items} 
           createTask={this.createTask.bind(this)}
+          placeholderText={this.state.placeholderText}
         />
+        <GeneratorButton
+          changeOpenGeneratorModal={this.changeOpenGeneratorModal.bind(this)}
+          openGeneratorModal={this.state.openGeneratorModal}
+          category={this.state.category}
+          items={this.state.items}
+        />
+
         <ItemList 
             items={this.state.items} 
             category={this.state.category}
@@ -80,14 +94,16 @@ class App extends Component {
 
   changeOpenModal(){
     this.setState({openModal: !this.state.openModal});
-  
+  }
+
+  changeOpenGeneratorModal(){    
+    this.setState({openGeneratorModal: !this.state.openGeneratorModal});
   }
 
   createTask(subcategoryName,q,category, subcategoryId){
     if(q<1){
       return
     }
-
     let id = this.giveNewId();
     let itemsCopy = this.state.items; 
 
@@ -133,14 +149,15 @@ class App extends Component {
     }
   }
 
+
+
   handleQinModal(q, subcategoryId, categoryId, subcategoryName){
     let itemsCopy = this.state.items;
     let objectIndex = itemsCopy.findIndex(object => object.subcategoryId === subcategoryId);
-    objectIndex >= 0 ? itemsCopy[objectIndex].q += q : this.createTask(subcategoryName, q, categoryId, subcategoryId);
+    (objectIndex >= 0) ? (itemsCopy[objectIndex].q += q) : this.createTask(subcategoryName, q, categoryId, subcategoryId);
     this.setState({ items: itemsCopy});
-
-    
   }
+  
 }
 
 export default App;

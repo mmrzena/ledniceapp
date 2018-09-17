@@ -197,6 +197,10 @@ button{
   z-index: 9;
 }
 
+.openModal::-webkit-scrollbar{
+  display: none;
+}
+
 .closeModal {
   position: absolute;
   top: 15px;
@@ -293,6 +297,43 @@ button{
   width: 40px;
   height: 25px;
   font-size: 16px;  
+}
+
+.ownedItems, .missingItems{
+  list-style: none;
+  padding: 0;
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+
+}
+
+.missingItems{
+  padding-left: 40px;
+  color: rgb(224, 73, 46);
+}
+
+.ownedItems{
+  padding-right: 40px;
+}
+
+
+.contentModalShoppingList {
+  justify-content: center;
+}
+
+.contentModalShoppingList ul li {
+  font-size: 16px;
+  margin: 8px;
+  font-weight: normal;
+}
+
+.contentModalShoppingList ul li:first-child{
+  margin-top: 20px;
+}
+
+.ownedItemQ{
+  margin-left: 10px;
 }
 
 .mlečnévýrobky {
