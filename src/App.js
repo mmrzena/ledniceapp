@@ -62,6 +62,13 @@ class App extends Component {
       <div className="App">    
         <Filter onTextChange={text => this.setState({filterString: text})} />
 
+        <GeneratorButton
+          changeOpenGeneratorModal={this.changeOpenGeneratorModal.bind(this)}
+          openGeneratorModal={this.state.openGeneratorModal}
+          category={this.state.category}
+          items={this.state.items}
+        />
+        
         <CategoryButton 
           category={this.state.category}
           openModal={this.state.openModal}
@@ -72,12 +79,6 @@ class App extends Component {
           items={this.state.items} 
           createTask={this.createTask.bind(this)}
           placeholderText={this.state.placeholderText}
-        />
-        <GeneratorButton
-          changeOpenGeneratorModal={this.changeOpenGeneratorModal.bind(this)}
-          openGeneratorModal={this.state.openGeneratorModal}
-          category={this.state.category}
-          items={this.state.items}
         />
 
         <ItemList 

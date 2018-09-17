@@ -299,6 +299,7 @@ button{
   font-size: 16px;  
 }
 
+
 .ownedItems, .missingItems{
   list-style: none;
   padding: 0;
@@ -317,6 +318,9 @@ button{
   padding-right: 40px;
 }
 
+.openGeneratorModalButton {
+  font-size: 18px;
+}
 
 .contentModalShoppingList {
   justify-content: center;
@@ -362,4 +366,14 @@ button{
 
 .ryby {
   background: #F21B3F;
+}
+
+@media only screen and (max-width: 500px){
+  .contentModalShoppingList {
+    justify-content: left;
+  }
+
+  .missingItems, .ownedItems {
+    padding-left: 20px;
+  }
 }

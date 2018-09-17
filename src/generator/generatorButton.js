@@ -53,7 +53,7 @@ class GeneratorButton extends Component {
   render() {
     return (
         <div>
-            <button className='openModalButton' onClick={this.props.changeOpenGeneratorModal.bind(this)}>
+            <button className='openModalButton openGeneratorModalButton' onClick={this.props.changeOpenGeneratorModal.bind(this)}>
             Generate Shopping List
             </button>
             {this.renderDiv()}
