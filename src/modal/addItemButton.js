@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Categories from './categories.js'
 
-class CategoryButton extends Component {
+class AddItemButton extends Component {
 
 
     renderCategories() {
@@ -45,4 +45,4 @@ class CategoryButton extends Component {
 
 }
 
-export default CategoryButton;
+export default AddItemButton;

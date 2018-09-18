@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import './style/App.css';
 import ItemList from './itemList/ItemList.js';
 import Filter from './filter/filter.js';
-import CategoryButton from './modal/categoryButton.js';
+import AddItemButton from './modal/addItemButton.js';
 import category from './variables/variables.js';
-import GeneratorButton from './generator/generatorButton.js'
-
+import GeneratorButton from './generator/generatorButton.js';
+import database, { firebase } from './firebase/firebase';
 const items = [
   { 
     id: 1,
@@ -37,29 +37,57 @@ const items = [
   }
 ]
 
-
-
-
+const dbRef = database.collection('items');
 
 class App extends Component {
   constructor(props) {
     super(props);
 
+    // this.getData();
+
     this.state = {
-      items: items,
+      items: [],
       filterString: '',
       category: category,
       openModal: false,
       openGeneratorModal: false,
+      loading: true,
     };
   }
+ 
+ getData() {
+    dbRef.onSnapshot(querySnapshot => {
+      let myData = [];
+      this.setState({items: myData})
+      this.setState({loading: true})
+      let counter = 0
+      querySnapshot.forEach( doc => {
+          let itemsId=this.state.items.map(item => item.id);
+          if(itemsId.includes(doc.data().id)){
+            return
+          } else {
+            // let myData = this.state.items;
+            myData.push(doc.data());
+            this.setState({items: myData})
+          }
+          counter++
+      })
+      if(counter === myData.length) {
+        this.setState({loading: false})
+      }
+    })
+  }
+
+  componentDidMount() {
+    this.getData();
+  }
   
-  
-  
+   
   render() {
-      
+    
     return (
       <div className="App">    
+
         <Filter onTextChange={text => this.setState({filterString: text})} />
 
         <GeneratorButton
@@ -68,8 +96,7 @@ class App extends Component {
           category={this.state.category}
           items={this.state.items}
         />
-        
-        <CategoryButton 
+        <AddItemButton 
           category={this.state.category}
           openModal={this.state.openModal}
           handleQinModal={this.handleQinModal.bind(this)}
@@ -80,8 +107,9 @@ class App extends Component {
           createTask={this.createTask.bind(this)}
           placeholderText={this.state.placeholderText}
         />
-
+             
         <ItemList 
+            loading={this.state.loading}
             items={this.state.items} 
             category={this.state.category}
             filterString={this.state.filterString}
@@ -106,35 +134,76 @@ class App extends Component {
       return
     }
     let id = this.giveNewId();
-    let itemsCopy = this.state.items; 
-
-    itemsCopy.push({
-      id: id,
-      categoryId: category,
-      subcategoryId: subcategoryId,
-      subcategoryName: subcategoryName,
-      q: q
-    });
-
-    this.setState({ items: itemsCopy});
+      dbRef.add({
+          id: id,
+          categoryId: category,
+          subcategoryId: subcategoryId,
+          subcategoryName: subcategoryName,
+          q: q
+      }).then(() => console.log('added'))
   }
 
+  handleQinModal(q, subcategoryId, categoryId, subcategoryName){
+    let itemsCopy = this.state.items;
+    let objectIndex = itemsCopy.findIndex(object => object.subcategoryId === subcategoryId);
+    (objectIndex >= 0) ? (itemsCopy[objectIndex].q += q) : this.createTask(subcategoryName, q, categoryId, subcategoryId);
+    this.setState({ items: itemsCopy});
+  }
+  
+
   giveNewId(){
+    if(this.state.items.length === 0) {
+      return 1
+    } else {
     let arrayOfId = this.state.items.map(id => id.id)
     let highestId = Math.max.apply(Math, arrayOfId)
     highestId++
     return highestId
+    }
   }
 
   delItem(id){
-    this.setState({ items: this.state.items.filter(newItem => newItem.id !== id)});
+    // this.setState({ items: this.state.items.filter(newItem => newItem.id !== id)});
+
+    dbRef.where("id", "==", id)
+    .get()  
+    .then(querySnapshot => {
+      querySnapshot.forEach((doc) => {
+        doc.ref.delete().then(() => {
+          console.log("Document successfully deleted!");
+        }).catch(function(error) {
+          console.error("Error removing document: ", error);
+        });
+      });
+    })
+    .catch(function(error) {
+      console.log("Error getting documents: ", error);
+    });
+
   }
 
   editUpQ(id){
-    let itemsCopy = this.state.items;
-    let objectIndex = itemsCopy.findIndex(object => object.id === id);
-    itemsCopy[objectIndex].q += 1;
-    this.setState({ items: itemsCopy})
+    // let itemsCopy = this.state.items;
+    // let objectIndex = itemsCopy.findIndex(object => object.id === id);
+    // itemsCopy[objectIndex].q += 1;
+    // this.setState({ items: itemsCopy})
+        dbRef.where("id", "==", id)
+        .get()  
+        .then(querySnapshot => {
+          querySnapshot.forEach((doc) => {
+            let quantity = doc.data().q;
+            quantity++
+            dbRef.doc(doc.id).update({q: quantity})
+            .then(() => {
+              console.log("Value successfully increased!");
+            }).catch(function(error) {
+              console.error("Error increasing quantity: ", error);
+            });
+          });
+          })
+        .catch(function(error) {
+          console.log("Error getting documents: ", error);
+        });
 
   }
 
@@ -145,20 +214,29 @@ class App extends Component {
     if(this.state.items[objectIndex].q === 1){
       {this.delItem(id)}
     } else {
-    itemsCopy[objectIndex].q -= 1;
-    this.setState({ items: itemsCopy})
+      dbRef.where("id", "==", id)
+      .get()  
+      .then(querySnapshot => {
+        querySnapshot.forEach((doc) => {
+          let quantity = doc.data().q;
+          quantity--
+          dbRef.doc(doc.id).update({q: quantity})
+          .then(() => {
+            console.log("Value successfully decreased!");
+          }).catch(function(error) {
+            console.error("Error decreasing quantity: ", error);
+          });
+        });
+        })
+      .catch(function(error) {
+        console.log("Error getting documents: ", error);
+      });
     }
   }
 
 
 
-  handleQinModal(q, subcategoryId, categoryId, subcategoryName){
-    let itemsCopy = this.state.items;
-    let objectIndex = itemsCopy.findIndex(object => object.subcategoryId === subcategoryId);
-    (objectIndex >= 0) ? (itemsCopy[objectIndex].q += q) : this.createTask(subcategoryName, q, categoryId, subcategoryId);
-    this.setState({ items: itemsCopy});
-  }
-  
+
 }
 
 export default App;

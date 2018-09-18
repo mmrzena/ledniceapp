@@ -38,25 +38,36 @@ class ItemList extends Component {
   
   
   render() {
-    if( this.props.items.length === 0){
+    if(this.props.loading){
       return (
-        <span className='noFood'>
-          You have no food in the fridge :( 
+        <span className='noFood'> 
+        loading
         </span>
       )
-    } else if(this.renderItems().length === 0) {
-      return (
-        <span className='noFood'>
-            your mom is so fat that she ate all the food you are searching for
-        </span>
-      )
-    } else {
-      return ( 
-        <div className='listDiv'>
-          {this.renderHeaders()}
-        </div>
-        );
+    }else {
+
+      if( this.props.items.length === 0){
+        return (
+          <span className='noFood'>
+            You have no food in the fridge :( 
+          </span>
+        )
+      } else if(this.renderItems().length === 0) {
+        return (
+          <span className='noFood'>
+              your mom is so fat that she ate all the food you are searching for
+          </span>
+        )
+      } else {
+        return ( 
+          <div className='listDiv'>
+            {this.renderHeaders()}
+          </div>
+          );
+      }
     }
+
+    
     
   }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import RemoveButtonSVG from '../img/removeButtonSVG';
 
 
 
@@ -19,7 +20,7 @@ class Item extends Component {
   render() {
     return (
         
-        <ul ref='item' className={this.state.class + ' animated bounceIn'} >
+        <ul ref='item' className={this.state.class} >
 
             <li className='itemSubcategory'>
                 {this.props.subcategoryName}
@@ -39,7 +40,7 @@ class Item extends Component {
             </li>
             <li className='buttons'>
                 <button className='delButton' onClick={this.props.delItem.bind(this,this.props.id)}>
-                del
+                <RemoveButtonSVG/>
                 </button>
                
             </li>

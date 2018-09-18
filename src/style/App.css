@@ -63,7 +63,7 @@ input:focus {
 .listDiv ul {
   padding: 18px;
   margin-right: 10px;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   margin-top: 0;
   list-style: none;
   border-radius: 5px;
@@ -118,6 +118,13 @@ button:focus {
 
 button{
   cursor: pointer;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .buttons{
@@ -127,20 +134,23 @@ button{
 .delButton {
   padding: 5px;
   margin: 0;
-  width: 40px;
-  height: 40px;
+  width: 33px;
+  height: 33px;
   border: none;
   font-weight: bold;
   background: transparent;
   border-radius: 50%;
-  transition: ease-in-out 0.5s;
-  transform-style: preserve-3d;
-  transform: rotateX(0deg);
+  transition: ease-in-out 0.2s;
 }
 
 .delButton:hover {
-  transform: rotateX(360deg);
-  background: #F21B3F;
+  transform: scale(1.1);
+  fill: #F21B3F;
+}
+
+
+.delButton:active {
+  transform: scale(0.9);
 }
 
 .upButton {
