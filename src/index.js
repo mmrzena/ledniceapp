@@ -6,11 +6,11 @@ import { firebase } from './firebase/firebase';
 
 ReactDOM.render(<Login />, document.getElementById('root'));
 
-let hasRendered = false;
+let isLoggedIn = false;
 
-const renderApp = () => {
-    if(hasRendered === true) {
-        ReactDOM.render(<App />, document.getElementById('root'));
+const renderApp = (collection) => {
+    if(isLoggedIn === true) {
+        ReactDOM.render(<App collection={collection} />, document.getElementById('root'));
     }else {
         ReactDOM.render(<Login />, document.getElementById('root'));
     }
@@ -20,12 +20,17 @@ const renderApp = () => {
 ReactDOM.render(<Login />, document.getElementById('root'));
 
 firebase.auth().onAuthStateChanged(user => {
-    if(user) {
+    if(user && !user.isAnonymous) {
         console.log('logged in')
-        hasRendered = true;
-        renderApp()
-    } else {
-        hasRendered = false;
+        isLoggedIn = true;
+        renderApp('items')
+    } else if (user && user.isAnonymous){
+        console.log('logged in as a guest')
+        isLoggedIn = true;
+        renderApp('guest')
+    }
+    else {
+        isLoggedIn = false;
         console.log('not logged in')
         renderApp()    
     }

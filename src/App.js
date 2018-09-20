@@ -8,7 +8,7 @@ import GeneratorButton from './generator/generatorButton.js';
 import database, { firebase } from './firebase/firebase';
 
 
-const dbRef = database.collection('items');
+// const dbRef = database.collection(this.props.collection);
 
 class App extends Component {
   constructor(props) {
@@ -24,8 +24,8 @@ class App extends Component {
     };
   }
  
- getData() {
-    dbRef.onSnapshot(querySnapshot => {
+  getData() {
+    database.collection(this.props.collection).onSnapshot(querySnapshot => {
       let myData = [];
       this.setState({items: myData})
       this.setState({loading: true})
@@ -110,7 +110,7 @@ class App extends Component {
     if(q<1) return
     let id = this.giveNewId();
 
-      dbRef.add({
+    database.collection(this.props.collection).add({
           id: id,
           categoryId: category,
           subcategoryId: subcategoryId,
@@ -126,12 +126,12 @@ class App extends Component {
     if(objectIndex >= 0){
       itemsCopy[objectIndex].q += q;
       this.setState({ items: itemsCopy});
-      dbRef.where("subcategoryId", "==", subcategoryId)
+      database.collection(this.props.collection).where("subcategoryId", "==", subcategoryId)
         .get()  
         .then(querySnapshot => {
           querySnapshot.forEach((doc) => {
             let quantity = doc.data().q + q;
-            dbRef.doc(doc.id).update({q: quantity})
+            database.collection(this.props.collection).doc(doc.id).update({q: quantity})
             .then(() => {
               console.log("Value successfully increased!");
             }).catch(function(error) {
@@ -164,7 +164,7 @@ class App extends Component {
   delItem(id){
     this.setState({ items: this.state.items.filter(newItem => newItem.id !== id)});
 
-    dbRef.where("id", "==", id)
+    database.collection(this.props.collection).where("id", "==", id)
     .get()  
     .then(querySnapshot => {
       querySnapshot.forEach((doc) => {
@@ -186,13 +186,13 @@ class App extends Component {
     let objectIndex = itemsCopy.findIndex(object => object.id === id);
     itemsCopy[objectIndex].q += 1;
     this.setState({ items: itemsCopy});
-        dbRef.where("id", "==", id)
+    database.collection(this.props.collection).where("id", "==", id)
         .get()  
         .then(querySnapshot => {
           querySnapshot.forEach((doc) => {
             let quantity = doc.data().q;
             quantity++
-            dbRef.doc(doc.id).update({q: quantity})
+            database.collection(this.props.collection).doc(doc.id).update({q: quantity})
             .then(() => {
               console.log("Value successfully increased!");
             }).catch(function(error) {
@@ -216,13 +216,13 @@ class App extends Component {
       itemsCopy[objectIndex].q -= 1;
       this.setState({ items: itemsCopy});
 
-      dbRef.where("id", "==", id)
+      database.collection(this.props.collection).where("id", "==", id)
       .get()  
       .then(querySnapshot => {
         querySnapshot.forEach((doc) => {
           let quantity = doc.data().q;
           quantity--
-          dbRef.doc(doc.id).update({q: quantity})
+          database.collection(this.props.collection).doc(doc.id).update({q: quantity})
           .then(() => {
             console.log("Value successfully decreased!");
           }).catch(function(error) {

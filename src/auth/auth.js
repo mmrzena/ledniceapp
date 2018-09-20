@@ -17,10 +17,9 @@ class Login extends Component {
                 Login
                 </button>
 
-                {/* <button className='authBtn' id='signup' ref='signup' onClick={this.signUp.bind(this)}>
-                Sign Up
-                </button> */}
-
+                <button className='authBtn' id='guest' ref='guest' onClick={this.guest.bind(this)}>
+                As a Guest
+                </button>
                 
                 </div>
             </div>
@@ -37,18 +36,9 @@ class Login extends Component {
       promise.catch(e => console.log(e.message));
   }
 
-//   signUp(){
-//     const email = this.refs.email.value;
-//     const pass = this.refs.password.value;
-//     const auth = firebase.auth();
-
-//     const promise = auth.createUserWithEmailAndPassword(email, pass);
-//     promise.catch(e => console.log(e.message));
-
-//     this.refs.email.value = '';
-//     this.refs.password.value = '';
-//   }
-
+  guest() {
+      firebase.auth().signInAnonymously().catch(e => console.log(e.message));
+  }
 
 }  
 

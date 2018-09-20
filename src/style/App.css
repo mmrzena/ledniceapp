@@ -46,6 +46,7 @@ body{
   flex-direction: row;
   width: 300px;
   margin: 0 auto;
+  justify-content: space-between;
 }
 
 .hide {
@@ -56,6 +57,11 @@ body{
   background: white;
   color: #346ccc;
   border: 1px solid #346ccc;
+}
+
+#guest {
+  background: white;
+  color: #346ccc;
 }
 
 #logout {
